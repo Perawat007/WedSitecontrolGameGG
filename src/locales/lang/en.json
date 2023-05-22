@@ -1,0 +1,49 @@
+{
+    "nav": {
+        "apps": "-----------------------------------",
+        "dashboard": "Dashboard",
+        "singleMenuItem": "",
+
+        "collapseProfile": {
+            "profile": "บัญชีผู้ใช้",
+            "item1": "ข้อมูลส่วนตัว",
+            "item2": "รหัสผ่าน"
+        },
+        "collapseReports": {
+            "reports": "Reports",
+            "item1": "ภาพรวมรายวัน",
+            "item2": "ค่าคอมมิชชันเกมส์รายเดือน",
+            "item3": "ค่าคอมมิชชันSubAgentรายเดือน",
+            "item4": "เปอร์เซ็นต์ที่ได้รับ",
+            "item5": "อับดับ User"
+        },
+        "groupMenu": {
+
+            "editGame": {
+                "editGame": "Game",
+                "item1": "GameDemo",
+                "item2": "ตั้งค่า Winrate"
+            },
+            "editAgent": {
+                "editAgent": "Agent",
+                "item1": "Agent",
+                "item2": "เพิ่ม Agent"
+            },
+            "apis": {
+                "apis": "APIs",
+                "item1": "ผลเกมส์"
+            },
+            "userManual": {
+                "userManual": "User Manual",
+                "item1": "วิธีเพิ่มเครดิตให้ลูกค้า",
+                "item2": "วิธีเพิ่มผู้ใช้งาน",
+                "item3": "วิธีแจ้งปัญหาการใช้งาน",
+                "item4": "อธิบายกราฟต่างๆ",
+                "item5": "อธิบายสถิติต่างๆ"
+            },
+            "condition": "เงื่อนไขและข้อตกลง",
+            "updatereport": "รายงานการอัพเดทระบบ",
+            "manual": "คู่มือการใช้งาน Demo"
+        }
+    }
+}
