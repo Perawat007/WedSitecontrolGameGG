@@ -19,6 +19,11 @@ const CustomersTableTools = () => {
         dispatch(setDrawerOpen())
     }
 
+    const idAgent = useSelector(
+        (state) => state.auth.user
+    )
+    const idUser = idAgent.id
+
     const inputRef = useRef()
 
     const tableData = useSelector((state) => state.crmCustomers.data.tableData)
@@ -27,7 +32,9 @@ const CustomersTableTools = () => {
         const newTableData = cloneDeep(tableData)
         newTableData.query = val
         newTableData.pageIndex = 1
+        newTableData.idUser = idUser
         if (typeof val === 'string' && val.length !== 0) {
+            console.log(newTableData);
             fetchData(newTableData)
         }
 

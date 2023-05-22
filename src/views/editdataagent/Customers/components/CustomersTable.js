@@ -250,13 +250,14 @@ const Customers = () => {
         dispatch(getCustomers({ pageIndex, pageSize, sort, query, filterData, idUser}))
     }, [pageIndex, pageSize, sort, query, filterData, idUser, dispatch])
 
+
     useEffect(() => {
         fetchData()
-    }, [fetchData, pageIndex, pageSize, sort, filterData])
+    }, [fetchData, pageIndex, pageSize, sort, filterData, idUser])
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, sort, query, total, idUser }),
+        [pageIndex, pageSize, sort, query, total, idUser]
     )
 
     const onPaginationChange = (page) => {

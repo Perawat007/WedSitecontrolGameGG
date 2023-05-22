@@ -21,6 +21,7 @@ export const getCustomerStatistic = createAsyncThunk(
 export const getCustomers = createAsyncThunk(
     'crmCustomers/data/getCustomers',
     async (params) => {
+        console.log(params);
         const response = await apiGetAgent(params)
         return response
     }
