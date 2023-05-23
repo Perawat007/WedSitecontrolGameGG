@@ -97,7 +97,7 @@ const ApiService = {
     })
   },
 
-  //GetDataAgent //Search ด้วย ส่ง name มา
+  //GetDataSubAgent //Search ด้วย ส่ง name มา
   fetchDataAg(param) {
     return new Promise((resolve, reject) => {
       //const token = localStorage.getItem("token");

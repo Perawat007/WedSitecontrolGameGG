@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import {
     Input,
     Avatar,
@@ -30,9 +30,32 @@ import * as Yup from 'yup'
 const { Control } = components
 
 const validationSchema = Yup.object().shape({
-    id: Yup.string(),
-    username: Yup.string().email('Invalid email').required('Email Required'),
-    status: Yup.string(),
+    name: Yup.string()
+        .min(1, 'Too Short!')
+        .max(30, 'Too Long!')
+        .matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
+        .required('Name Required'),
+    username: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
+        .required('User Name Required'),
+    id: Yup.string()
+        .required('Password Required')
+        .min(1, 'Too Short!')
+        .max(20, 'Too Long!')
+        .matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed'),
+    contact_number: Yup.string()
+        .required('Password Required')
+        .matches(/^\d{10}$/, 'Invalid phone number'),
+
+    status: Yup.string()
+        .required('Password Required')
+        .min(1, 'Too Short!'),
+
+    position_type: Yup.string()
+        .required('Password Required')
+        .min(1, 'Too Short!'),
 })
 
 const Profile = (data) => {
@@ -50,17 +73,18 @@ const Profile = (data) => {
     return (
         <Formik
             initialValues={{
-                id : data.data.id,
+                id: data.data.id,
                 username: data.data.username,
-                name : data.data.name,
-                contact_number : data.data.contact_number,
-                status : data.data.status,
-                credit : data.data.credit,
+                name: data.data.name,
+                contact_number: data.data.contact_number,
+                status: data.data.status,
+                credit: data.data.credit,
+                position_type: 'Agent',
                 level: 'Agent',
                 currency: 'บาท'
             }}
             enableReinitialize
-            //validationSchema={validationSchema}
+            validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true)
                 setTimeout(() => {
@@ -91,7 +115,7 @@ const Profile = (data) => {
                                     prefix={
                                         <HiOutlineUserCircle className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
                             <FormRow
@@ -108,7 +132,7 @@ const Profile = (data) => {
                                     prefix={
                                         <HiOutlineUser className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
 
@@ -126,17 +150,17 @@ const Profile = (data) => {
                                     prefix={
                                         <HiOutlineUser className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
 
                             <FormRow
-                                name="telephone number"
+                                name="contact_number"
                                 label="Telephone Number"
                                 {...validatorProps}
                             >
                                 <Field
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
                                     name="contact_number"
                                     placeholder="Telephone Number"
@@ -144,7 +168,7 @@ const Profile = (data) => {
                                     prefix={
                                         <HiOutlinePhone className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
 
@@ -162,12 +186,12 @@ const Profile = (data) => {
                                     prefix={
                                         <HiOutlineEye className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
 
                             <FormRow
-                                name="position type"
+                                name="position_type"
                                 label="ประเภทตำแหน่ง"
                                 {...validatorProps}
                                 border={false}
@@ -175,78 +199,72 @@ const Profile = (data) => {
                                 <Field
                                     type="text"
                                     autoComplete="off"
-                                    name="position type"
+                                    name="position_type"
                                     placeholder="ประเภทตำแหน่ง"
                                     component={Input}
                                     prefix={
                                         <HiOutlineEye className="text-xl" />
                                     }
-                                    disabled 
+                                    disabled
                                 />
                             </FormRow>
-                            
+
                             <AdaptableCard className="mb-4" divider>
-                            <h5>ยอดเงิน</h5>
-                            <p className="mb-6">Section to config product sales information</p>
-                            <FormItem
-                                     label="ระดับ"
-                                     invalid={errors.stock && touched.stock}
-                                     errorMessage={errors.stock}
-                                >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="level"
-                                    placeholder="Agent"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineUserGroup className="text-xl" />
-                                    }
-                                    disabled 
-                                />
-                            </FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                            <div className="col-span-1">
+                                <h5>ยอดเงิน</h5>
+                                <p className="mb-6">Section to config product sales information</p>
                                 <FormItem
-                                     label="ยอดเงิน"
-                                     invalid={errors.stock && touched.stock}
-                                     errorMessage={errors.stock}
+                                    label="ระดับ"
                                 >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="credit"
-                                    placeholder="ยอดเงิน"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineCurrencyDollar className="text-xl" />
-                                    }
-                                    disabled 
-                                />
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="level"
+                                        placeholder="Agent"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlineUserGroup className="text-xl" />
+                                        }
+                                        disabled
+                                    />
                                 </FormItem>
-                            </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                            <div className="col-span-1">
-                                <FormItem
-                                     label="สกุลเงิน"
-                                     invalid={errors.stock && touched.stock}
-                                     errorMessage={errors.stock}
-                                >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="currency"
-                                    placeholder="บาท"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineCash className="text-xl" />
-                                    }
-                                    disabled 
-                                />
-                                </FormItem>
-                            </div>
-                            </div>
+                                    <div className="col-span-1">
+                                        <FormItem
+                                            label="ยอดเงิน"
+                                        >
+                                            <Field
+                                                type="text"
+                                                autoComplete="off"
+                                                name="credit"
+                                                placeholder="ยอดเงิน"
+                                                component={Input}
+                                                prefix={
+                                                    <HiOutlineCurrencyDollar className="text-xl" />
+                                                }
+                                                disabled
+                                            />
+                                        </FormItem>
+                                    </div>
+
+                                    <div className="col-span-1">
+                                        <FormItem
+                                            label="สกุลเงิน"
+                                        >
+                                            <Field
+                                                type="text"
+                                                autoComplete="off"
+                                                name="currency"
+                                                placeholder="บาท"
+                                                component={Input}
+                                                prefix={
+                                                    <HiOutlineCash className="text-xl" />
+                                                }
+                                                disabled
+                                            />
+                                        </FormItem>
+                                    </div>
+                                </div>
                             </AdaptableCard>
                         </FormContainer>
                     </Form>
