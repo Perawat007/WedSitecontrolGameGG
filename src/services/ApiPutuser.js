@@ -83,6 +83,7 @@ const ApiPutuser = {
 
   putSubAgent(param) {
     return new Promise((resolve, reject) => {
+      console.log(param)
       fetch(baseURL + 'post/EditDataSubAgent/',{
         method: 'PUT',
         headers: {

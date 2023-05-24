@@ -217,7 +217,7 @@ const columns = [
                 <div className="flex items-center">
                     <HiCurrencyDollar className="text-emerald-500 text-xl"/>
                     <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.credit}
+                        {row.creditsub}
                     </span>
                 </div>
             )

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Loading, DoubleSidedImage } from 'components/shared'
-import { toast, Notification } from 'components/ui'
+import { toast, Notification,  Button, Dialog  } from 'components/ui'
 import { useDispatch, useSelector } from 'react-redux'
 import reducer from './store'
 import { injectReducer } from 'store/index'
@@ -17,6 +17,11 @@ const SubAgentEdit = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
+    const [dialogIsOpen, setIsOpen] = useState(false)
+    const [okay, setOkay] = useState(false)
+    const [dataEdit, setDataEdit] = useState('')
+
+
     const productData = useSelector(
         (state) => state.salesProductEdit.data.productData
     )
@@ -26,14 +31,27 @@ const SubAgentEdit = () => {
         dispatch(getSubAgent(data))
     }
 
-    const handleFormSubmit = async (values, setSubmitting) => {
-        setSubmitting(true)
-        const success = await updateProduct(values)
-       /* setSubmitting(false)
-        if (success) {
-            popNotification('updated')
-        }*/
+    const handleFormSubmit = async (values) => {
+        setIsOpen(true)
+        setDataEdit(values);
     }
+
+    const editDataSUb = async () => {
+        console.log(dataEdit);
+        const success = await updateProduct(dataEdit)
+        navigate('/editDataAgent')
+    }
+
+    const onDialogClose = (e) => {
+        setOkay(false)
+        setIsOpen(false)
+    }
+
+    const onDialogOk = (e) => {
+        setIsOpen(false)
+        editDataSUb();
+    }
+
 
     const handleDiscard = () => {
         navigate('/editDataAgent')
@@ -74,24 +92,50 @@ const SubAgentEdit = () => {
 
     return (
         <>
-            <Loading loading={loading}>
-                {!isEmpty(productData[0]) && (
-                    <>
-                        <ProductForm
-                            type="edit"
-                            initialData={productData[0]}
-                            onFormSubmit={handleFormSubmit}
-                            onDiscard={handleDiscard}
-                            onDelete={handleDelete}
-                        />
-                    </>
+            <div>
+                <Dialog
+                    isOpen={dialogIsOpen}
+                    onClose={onDialogClose}
+                    onRequestClose={onDialogClose}
+                >
+                    <h5 className="mb-4">การแจ้งเตือน</h5>
+                    <p>
+                        คุณต้องการแก้ไขข้อมูลตามนี้หรือไม่
+                    </p>
+                    <div className="text-right mt-6">
+                        <Button
+                            className="ltr:mr-2 rtl:ml-2"
+                            variant="plain"
+                            onClick={onDialogClose}
+                        >
+                            ยกเลิก
+                        </Button>
+                        <Button variant="solid" onClick={onDialogOk}>
+                            แก้ไข
+                        </Button>
+                    </div>
+                </Dialog>
+
+                <Loading loading={loading}>
+                    {!isEmpty(productData[0]) && (
+                        <>
+                            <ProductForm
+                                type="edit"
+                                initialData={productData[0]}
+                                onFormSubmit={handleFormSubmit}
+                                onDiscard={handleDiscard}
+                                onDelete={handleDelete}
+                            />
+                        </>
+                    )}
+                </Loading>
+                {!loading && isEmpty(productData) && (
+                    <div className="h-full flex flex-col items-center justify-center">
+                        <h3 className="mt-8">No product found!</h3>
+                    </div>
                 )}
-            </Loading>
-            {!loading && isEmpty(productData) && (
-                <div className="h-full flex flex-col items-center justify-center">
-                    <h3 className="mt-8">No product found!</h3>
-                </div>
-            )}
+            </div>
+
         </>
     )
 }

@@ -45,11 +45,10 @@ const validationSchema = Yup.object().shape({
         .max(20, 'Too Long!')
         .matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
         .required('User Name Required'),
-    passwordNew: Yup.string()
-        .min(8, 'Too Short!')
-        .max(20, 'Too Long!')
-        .matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed')
-        .required('Password Required'),
+    password: Yup.string()
+       
+        //.matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
+        /*.required('Password Required')*/,
     contact_number: Yup.string()
         .required('Password Required')
         .matches(/^\d{10}$/, 'Invalid phone number'),
@@ -90,7 +89,7 @@ const ProductForm = forwardRef((props, ref) => {
     }
 
     const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
-
+    console.log(initialData);
     const newId = useUniqueId('product-')
 
     return (
@@ -98,164 +97,130 @@ const ProductForm = forwardRef((props, ref) => {
             <Formik
                 innerRef={ref}
                 initialValues={{
-                    ...initialData,
-                    tags: initialData?.tags
-                        ? initialData.tags.map((value) => ({
-                            label: value,
-                            value,
-                        }))
-                        : [],
+                    id: initialData.id || '',
+                    username: initialData.username || '',
+                    password: '',
+                    name: initialData.name || '',
+                    contact_number: initialData.contact_number || '',
+                    status: initialData.status || '',
+                    rank: initialData.ranksubAgent || '',
+                    level: initialData.level || '',
+                    credit: initialData.creditsub || '',
+                    currency: initialData.currencysubagent || '',
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => tag.value)
-                    onFormSubmit?.(formData, setSubmitting)
+                    onFormSubmit?.(values)
+                    setSubmitting(false)
                 }}
             >
-               {({ values, touched, errors, isSubmitting }) => {
-                const validatorProps = { touched, errors }
-                return (
-                    <Form>
-                        <FormContainer>
-                            <FormDesription
-                                title="Edit SubAgent "
-                                desc="กรุณากรอกข้อมูลให้ครบทุกช่อง"
-                            />
-                            <FormRow
-                                name="id"
-                                label="ID"
-                                {...validatorProps}
-                            >
-                                <Field
+                {({ values, touched, errors, isSubmitting }) => {
+                    const validatorProps = { touched, errors }
+                    return (
+                        <Form>
+                            <FormContainer>
+                                <FormDesription
+                                    title="Edit SubAgent "
+                                    desc="กรุณากรอกข้อมูลให้ครบทุกช่อง"
+                                />
+                                <FormRow
                                     name="id"
-                                    component={Input}
-                                    prefix={<HiUserCircle className="text-xl" />}
-                                    disabled
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="username"
-                                label="Username"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="username"
-                                    placeholder="username"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineUser className="text-xl" />
-                                    }
-                                    disabled
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="passwordNew"
-                                label="password"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="password"
-                                    autoComplete="off"
-                                    name="passwordNew"
-                                    placeholder="Password"
-                                    component={Input}
-                                    prefix={<HiLockClosed className="text-xl" />}
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="name"
-                                label="Name"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="name"
-                                    placeholder="name"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineUser className="text-xl" />
-                                    }
-                                />
-                            </FormRow>
-
-                            <FormRow
-                                name="contact_number"
-                                label="Telephone Number"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="contact_number"
-                                    placeholder="Telephone Number"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlinePhone className="text-xl" />
-                                    }
-                                />
-                            </FormRow>
-
-                            <FormRow
-                                name="rank"
-                                label="ประเภทตำแหน่ง"
-                                {...validatorProps}
-                                border={false}
-                            >
-                                <Field name="rank">
-                                    {({ field, form }) => (
-                                        <Select
-                                            field={field}
-                                            form={form}
-                                            placeholder="Please Select"
-                                            options={rank}
-                                            components={{
-                                                Option: CustomSelectOption,
-                                                Control: CustomControl,
-                                            }}
-                                            value={rank.filter(
-                                                (option) =>
-                                                    option.value ===
-                                                    values?.rank
-                                            )}
-                                            onChange={(option) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    option.value
-                                                )
-                                            }
-                                        />
-                                    )}
-                                </Field>
-                            </FormRow>
-
-                            <AdaptableCard className="mb-4" divider>
-                                <h5>กระเป๋าเงิน</h5>
-                                <p className="mb-6">Section to config product sales information</p>
-                               
-                                <FormItem
-                                    label="ระดับ"
-                                    invalid={errors.stock && touched.stock}
-                                    errorMessage={errors.stock}
+                                    label="ID"
+                                    {...validatorProps}
                                 >
-                                    <Field name="level">
+                                    <Field
+                                        name="id"
+                                        component={Input}
+                                        prefix={<HiUserCircle className="text-xl" />}
+                                        disabled
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="username"
+                                    label="Username"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="username"
+                                        placeholder="username"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlineUser className="text-xl" />
+                                        }
+                                        disabled
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="password"
+                                    label="password"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="password"
+                                        autoComplete="off"
+                                        name="password"
+                                        placeholder="Password"
+                                        component={Input}
+                                        prefix={<HiLockClosed className="text-xl" />}
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="name"
+                                    label="Name"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="name"
+                                        placeholder="name"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlineUser className="text-xl" />
+                                        }
+                                    />
+                                </FormRow>
+
+                                <FormRow
+                                    name="contact_number"
+                                    label="Telephone Number"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="contact_number"
+                                        placeholder="Telephone Number"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlinePhone className="text-xl" />
+                                        }
+                                    />
+                                </FormRow>
+
+                                <FormRow
+                                    name="rank"
+                                    label="ประเภทตำแหน่ง"
+                                    {...validatorProps}
+                                    border={false}
+                                >
+                                    <Field name="rank">
                                         {({ field, form }) => (
                                             <Select
                                                 field={field}
                                                 form={form}
                                                 placeholder="Please Select"
-                                                options={level}
+                                                options={rank}
                                                 components={{
                                                     Option: CustomSelectOption,
                                                     Control: CustomControl,
                                                 }}
-                                                value={level.filter(
+                                                value={rank.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values?.level
+                                                        values?.rank
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -266,74 +231,108 @@ const ProductForm = forwardRef((props, ref) => {
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                </FormRow>
 
-                                    <div className="col-span-1">
-                                        <FormItem
-                                            label="ยอดเงิน"
-                                        >
-                                            <Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="credit"
-                                                placeholder="ยอดเงิน"
-                                                component={Input}
-                                                prefix={
-                                                    <HiOutlineCurrencyDollar className="text-xl" />
-                                                }
-                                            />
-                                        </FormItem>
-                                    </div>
+                                <AdaptableCard className="mb-4" divider>
+                                    <h5>กระเป๋าเงิน</h5>
+                                    <p className="mb-6">Section to config product sales information</p>
 
-                                    <div className="col-span-1">
-                                        <FormItem
-                                            label="สกุลเงิน"
-                                        >
-                                            <Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="currency"
-                                                placeholder="บาท"
-                                                component={Input}
-                                                prefix={
-                                                    <HiOutlineCash className="text-xl" />
-                                                }
-                                            />
-                                        </FormItem>
-                                    </div>
-                                </div>
-                            </AdaptableCard>
-
-                            <StickyFooter
-                                className="-mx-8 px-8 flex items-center justify-between py-4"
-                                stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                            >
-                                <div className="md:flex items-center">
-                                    <Button
-                                        size="sm"
-                                        className="ltr:mr-3 rtl:ml-3"
-                                        onClick={() => onDiscard?.()}
-                                        type="button"
+                                    <FormItem
+                                        label="ระดับ"
                                     >
-                                        Discard
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="solid"
-                                        loading={isSubmitting}
-                                        icon={<AiOutlineSave />}
-                                        type="submit"
-                                    >
-                                        Save
-                                    </Button>
-                                </div>
-                            </StickyFooter>
+                                        <Field name="level">
+                                            {({ field, form }) => (
+                                                <Select
+                                                    field={field}
+                                                    form={form}
+                                                    placeholder="Please Select"
+                                                    options={level}
+                                                    components={{
+                                                        Option: CustomSelectOption,
+                                                        Control: CustomControl,
+                                                    }}
+                                                    value={level.filter(
+                                                        (option) =>
+                                                            option.value ===
+                                                            values?.level
+                                                    )}
+                                                    onChange={(option) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            option.value
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                        </FormContainer>
-                    </Form>
-                )
-            }}
+                                        <div className="col-span-1">
+                                            <FormItem
+                                                label="ยอดเงิน"
+                                            >
+                                                <Field
+                                                    type="Number"
+                                                    autoComplete="off"
+                                                    name="credit"
+                                                    placeholder="ยอดเงิน"
+                                                    component={Input}
+                                                    prefix={
+                                                        <HiOutlineCurrencyDollar className="text-xl" />
+                                                    }
+                                                />
+                                            </FormItem>
+                                        </div>
+
+                                        <div className="col-span-1">
+                                            <FormItem
+                                                label="สกุลเงิน"
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="currency"
+                                                    placeholder="บาท"
+                                                    component={Input}
+                                                    prefix={
+                                                        <HiOutlineCash className="text-xl" />
+                                                    }
+                                                />
+                                            </FormItem>
+                                        </div>
+                                    </div>
+                                </AdaptableCard>
+
+                                <StickyFooter
+                                    className="-mx-8 px-8 flex items-center justify-between py-4"
+                                    stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                                >
+                                    <div className="md:flex items-center">
+                                        <Button
+                                            size="sm"
+                                            className="ltr:mr-3 rtl:ml-3"
+                                            onClick={() => onDiscard?.()}
+                                            type="button"
+                                        >
+                                            Discard
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="solid"
+                                            loading={isSubmitting}
+                                            icon={<AiOutlineSave />}
+                                            type="submit"
+                                        >
+                                            Save
+                                        </Button>
+                                    </div>
+                                </StickyFooter>
+
+                            </FormContainer>
+                        </Form>
+                    )
+                }}
             </Formik>
         </>
     )

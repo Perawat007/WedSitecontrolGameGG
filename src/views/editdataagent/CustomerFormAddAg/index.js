@@ -6,6 +6,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import FormDesription from './FormDesription'
 import { AdaptableCard } from 'components/shared'
 import FormRow from '../Settings/components/FormRow'
+import {useSelector} from 'react-redux'
 import { AiOutlineSave } from 'react-icons/ai'
 import {
     HiOutlineCash,
@@ -91,11 +92,16 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
             .matches(/^[0-9_-]*$/, 'Only Letters & Numbers Allowed'),
     })
 
+    const idAdmin = useSelector(
+        (state) => state.auth.user
+    )
+    const idUser = idAdmin.id
+    console.log(idUser);
     return (
         <Formik
             innerRef={ref}
             initialValues={{
-                id_Agent: 2,
+                id_Agent: idUser,
                 username: "",
                 name: "",
                 contact_number: "",
