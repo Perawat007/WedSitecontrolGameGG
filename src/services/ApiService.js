@@ -1,6 +1,7 @@
 import BaseService from './BaseService'
 
 const baseURL = 'https://relaxtimecafe.fun/'
+//const baseURL = 'http://localhost:5000/'
 const ApiService = {
   //Login Admin
   loginAdmin(param) {
@@ -263,6 +264,7 @@ const ApiService = {
   //AddAgent
   addAgent(param) {
     return new Promise((resolve, reject) => {
+      console.log(param);
       fetch(baseURL + 'post/singUpSubAgent', {
         method: 'POST',
         headers: {

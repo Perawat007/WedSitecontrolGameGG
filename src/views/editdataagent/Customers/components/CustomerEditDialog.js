@@ -17,10 +17,6 @@ const DrawerFooter = ({ onSaveClick, onCancel, onDelete }) => {
 
 const CustomerEditDialog = () => {
 
-    const idAgent = useSelector(
-        (state) => state.auth.user
-    )
-
     const formikRef = useRef()
 
     const formSubmit = () => {

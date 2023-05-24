@@ -50,7 +50,7 @@ const CustomerAddContent = forwardRef((_, ref) => {
             return elm.personalInfo
         })*/
         if (isEmpty(editedCustomer)) {
-            if (values.name !== '' && values.username !== '' && values.password !== ''&& values.contact_number !== '' && values.credit !== '' && values.positiontype !=='', values.level !== '' ){
+            if (values.name !== '' && values.username !== '' && values.password !== ''&& values.contact_number !== '' && values.credit !== '' && values.positiontype !=='' && values.level !== '' ){
                 dispatch(AddCustomer(values)) //เรียกใช้งาน API 
            }
            else{

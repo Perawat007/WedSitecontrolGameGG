@@ -51,7 +51,8 @@ export const AddCustomer = createAsyncThunk(
     'crmCustomers/data/AddCustomer',
     async (data) => {
         const response = await apAddAgent(data)
-        if (response.message === "Data Creates False") {
+        console.log(response);
+        if (response.message === "subAgent Creates False") {
             alert("UserName นี้มีอยู่แล้ว กรุณาเปลี่ยน Username");
         }
         else {
