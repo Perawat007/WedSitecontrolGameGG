@@ -23,7 +23,7 @@ import * as Yup from 'yup'
 const { useUniqueId } = hooks
 const { Control } = components
 const level = [
-    { value: 'Stater', label: 'Stater', icon: HiOutlineUser },
+    { value: 'Starter', label: 'Starter', icon: HiOutlineUser },
     { value: 'VIP', label: 'VIP' },
     { value: 'VVIP', label: 'VVIP' },
 ]

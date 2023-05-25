@@ -57,7 +57,7 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
     }
 
     const level = [
-        { value: 'Stater', label: 'Stater', icon: HiOutlineUser },
+        { value: 'Starter', label: 'Starter', icon: HiOutlineUser },
         { value: 'VIP', label: 'VIP' },
         { value: 'VVIP', label: 'VVIP' },
     ]
@@ -191,7 +191,7 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
                                 {...validatorProps}
                             >
                                 <Field
-                                    type="text"
+                                    type="Number"
                                     autoComplete="off"
                                     name="contact_number"
                                     placeholder="Telephone Number"
@@ -277,7 +277,7 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
                                             label="ยอดเงิน"
                                         >
                                             <Field
-                                                type="text"
+                                                type="Number"
                                                 autoComplete="off"
                                                 name="credit"
                                                 placeholder="ยอดเงิน"

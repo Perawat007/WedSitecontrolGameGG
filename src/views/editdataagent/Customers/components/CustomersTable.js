@@ -127,7 +127,7 @@ const columns = [
                 <div className="flex items-center">
                      <Avatar size={28} shape="circle" src={"/img/avatars/thumb-1.jpg"} />
                     <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.rank}
+                        {row.ranksubAgent}
                     </span>
                 </div>
             )
@@ -160,7 +160,7 @@ const columns = [
             return (
                 <div className="flex items-center">
                     <span className="ml-2 rtl:mr-2 capitalize">
-                        {row.currency}
+                        {row.currencysubagent}
                     </span>
                 </div>
             )
