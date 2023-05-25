@@ -191,7 +191,7 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
                                 {...validatorProps}
                             >
                                 <Field
-                                    type="Number"
+                                    type="text"
                                     autoComplete="off"
                                     name="contact_number"
                                     placeholder="Telephone Number"

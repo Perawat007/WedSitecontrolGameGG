@@ -46,7 +46,7 @@ const validationSchema = Yup.object().shape({
         .matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
         .required('User Name Required'),
     password: Yup.string()
-       
+
         //.matches(/^[A-Za-z0-9-]*$/, 'Only Letters & Numbers Allowed')
         /*.required('Password Required')*/,
     contact_number: Yup.string()
@@ -267,7 +267,6 @@ const ProductForm = forwardRef((props, ref) => {
                                         </Field>
                                     </FormItem>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                                         <div className="col-span-1">
                                             <FormItem
                                                 label="ยอดเงิน"
@@ -288,6 +287,8 @@ const ProductForm = forwardRef((props, ref) => {
                                         <div className="col-span-1">
                                             <FormItem
                                                 label="สกุลเงิน"
+                                                invalid={errors.credit && touched.credit}
+                                                errorMessage={errors.credit}
                                             >
                                                 <Field
                                                     type="text"
