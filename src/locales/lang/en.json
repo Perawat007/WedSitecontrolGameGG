@@ -26,8 +26,8 @@
             },
             "editAgent": {
                 "editAgent": "Agent",
-                "item1": "Agent",
-                "item2": "เพิ่ม Agent"
+                "item1": "ดู SubAgent",
+                "item2": "เพิ่ม SubAgent"
             },
             "apis": {
                 "apis": "APIs",

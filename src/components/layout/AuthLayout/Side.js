@@ -16,7 +16,7 @@ const Side = ({ children, content, ...rest }) => {
         border: '5px',
         borderRadius: '20px',
         textAlign: 'center'
-        
+
     };
 
     return (
@@ -24,24 +24,16 @@ const Side = ({ children, content, ...rest }) => {
             <div
                 className="bg-no-repeat bg-cover py-6 px-50 flex-col justify-between hidden lg:flex "
                 style={{
-                    height:"100vh",
+                    height: "100vh",
                     width: "100vw",
                     backgroundImage: `url('/img/others/bg-wedgame.jfif')`,
                     backgroundSize: "cover",
-                    backgroundPosition:"center"
+                    backgroundPosition: "center"
                 }}
             >
             </div>
             <div className="col-span-1 flex flex-col justify-center items-center">
-                <div style={backgroundImage}>
-                <div className="xl:min-w-[150px] px-8">
-                    <div className="mb-6 flex items-center gap-4">
-                         <Logo mode="dark" />
-                    </div>
-                    <div className="xl:min-w-[80px] mb-8">{content}</div>  
-                    {children ? cloneElement(children, { ...rest }) : null} {/*เกี่ยวกับ Login*/}
-                </div>
-                </div>
+                {children ? cloneElement(children, { ...rest }) : null} {/*เกี่ยวกับ Login*/}
             </div>
         </div>
     )

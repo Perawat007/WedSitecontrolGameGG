@@ -89,7 +89,6 @@ const ProductForm = forwardRef((props, ref) => {
     }
 
     const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
-    console.log(initialData);
     const newId = useUniqueId('product-')
 
     return (

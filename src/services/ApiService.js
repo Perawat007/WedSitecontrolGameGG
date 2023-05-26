@@ -1,7 +1,7 @@
 import BaseService from './BaseService'
 
-const baseURL = 'https://relaxtimecafe.fun/'
-//const baseURL = 'http://localhost:5000/'
+//const baseURL = 'https://relaxtimecafe.fun/'
+const baseURL = 'http://localhost:5000/'
 const ApiService = {
   //Login Admin
   loginAdmin(param) {
@@ -29,7 +29,7 @@ const ApiService = {
           resolve(data);
         })
         .catch(error => {
-          console.error('Error:', error);
+          resolve('No Login');
         });
     });
   },
@@ -97,6 +97,38 @@ const ApiService = {
         .catch(error => console.error(error))
     })
   },
+
+  //GetfetchDataSubMemberAg//Search ด้วย ส่ง name มา
+  fetchDataSubMemberAg(param) {
+    return new Promise((resolve, reject) => {
+      console.log(param);
+      fetch(baseURL + 'post/MemberSubAgent/' + param.data.idUser, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: param.data.query,
+          pageIndex: param.data.pageIndex,
+          pageSize: param.data.pageSize
+        })
+      })
+        .then(response => {
+          if (response) {
+            return response.json();
+          } else {
+            throw new Error('Error: ' + response.statusText);
+          }
+        })
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
+  },
+
 
   //GetDataSubAgent //Search ด้วย ส่ง name มา
   fetchDataAg(param) {
@@ -339,10 +371,11 @@ const ApiService = {
         },
         body: JSON.stringify({
           agent_id: param.data.agent_id,
-          member_code: param.data.member_code,
+          member_code: param.data.username,
           name: param.data.name,
           username: param.data.username,
           password: param.data.password,
+          credit: param.data.credit,
         })
       })
         .then(response => {

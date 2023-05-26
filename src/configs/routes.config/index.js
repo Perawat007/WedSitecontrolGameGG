@@ -179,5 +179,29 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+
+     //ดู MemberSubAgent ของ Agent
+     {
+        key: 'groupMenu.editAgent.item3',
+        path: '/memberSub/:nameSubAgent/:subagentId',
+        component: React.lazy(() => import('views/editdataagent/memberSub/Customers/memberSubAg')),
+        authority: [],
+    },
+
+     //editMemberSub pang
+     {
+        key: 'groupMenu.editMemberSub.item1',
+        path: '/EditmemberSub/:nameSubAgent/:subagentId',
+        component: React.lazy(() => import('views/editdataagent/memberSub/Customers/components/CustomerEditDialog')),
+        authority: [],
+    },
+    
+     //AddMemberSub pang
+     {
+        key: 'groupMenu.AddMemberSub.item2',
+        path: '/AddmemberSub/:nameSubAgent/:subagentId',
+        component: React.lazy(() => import('views/editdataagent/memberSub/Customers/components/CustomerAddDialog')),
+        authority: [],
+    },
 ]
 

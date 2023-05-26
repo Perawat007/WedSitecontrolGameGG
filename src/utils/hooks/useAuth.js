@@ -46,6 +46,12 @@ function useAuth() {
                     message: '',
                 }
             }
+            else{
+                return {
+                    status: 'failed',
+                    message: '',
+                }
+            }
         } catch (errors) {
             return {
                 status: 'failed',

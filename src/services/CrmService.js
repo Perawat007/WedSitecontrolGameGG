@@ -29,6 +29,13 @@ export async function apiGetSubAgent(data) {
     })
 }
 
+//get SubAgent
+export async function apiGetMemberSubAgent(data) {
+    return ApiService.fetchDataSubMemberAg({
+        data
+    })
+}
+
 
 //get Admin
 export async function apiGetCrmAdmin(data) {
