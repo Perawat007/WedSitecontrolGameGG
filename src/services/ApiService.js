@@ -1,7 +1,7 @@
 import BaseService from './BaseService'
 
-//const baseURL = 'https://relaxtimecafe.fun/'
-const baseURL = 'http://localhost:5000/'
+const baseURL = 'https://relaxtimecafe.fun/'
+//const baseURL = 'http://localhost:5000/'
 const ApiService = {
   //Login Admin
   loginAdmin(param) {
