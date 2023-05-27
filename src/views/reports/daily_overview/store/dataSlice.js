@@ -5,7 +5,6 @@ export const getCryptoDashboardData = createAsyncThunk(
     'dailyDashboard/data/getCryptoDashboardData',
     async (data) => {
         const response = await getCustomerValis(data)
-        console.log(response);
         return response
     }
 )

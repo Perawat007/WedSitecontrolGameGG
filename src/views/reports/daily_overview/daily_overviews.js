@@ -16,7 +16,7 @@ const Daily_overview = () => {
     const dispatch = useDispatch()
     const [dateValue, setDateValue] = useState(new Date())
     const {
-        dataGame, logGame, logDayGame,data,
+        dataGame, logGame, logDayGame, data,
     } = useSelector((state) => state.dailyDashboard.data.dashboardData)
 
     const statisticData = useSelector((state) => state.dailyDashboard.data.dashboardData)
@@ -51,27 +51,29 @@ const Daily_overview = () => {
         return banDate.includes(date.getDate())
     }
 
-    return (
-        <div className="flex flex-col gap-4 h-full">
-            <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-                <DatePicker
-                    value={dateValue}
-                    placeholder="กรุณาเลือกวัน"
-                    onChange={onCertainPeriodChange}
-                    disableDate={disableCertainDate}
+    if (logDayGame !== undefined) {
+        return (
+            <div className="flex flex-col gap-4 h-full">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+                    <DatePicker
+                        value={dateValue}
+                        placeholder="กรุณาเลือกวัน"
+                        onChange={onCertainPeriodChange}
+                        disableDate={disableCertainDate}
+                    />
+                </div>
+                <div className="grid grid-cols-1 xl:grid-cols-11 gap-4">
+                    <FastTrade className="2xl:col-span-3 xl:col-span-4" />
+                </div>
+                <Holding data={logDayGame[0]} dataview={statisticData} />
+                <DayCommission />
+                <MarketValue
+                    className="2xl:col-span-8 xl:col-span-7"
+                    data={logGame}
                 />
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-11 gap-4">
-                <FastTrade className="2xl:col-span-3 xl:col-span-4" />
-            </div>
-            <Holding data={logDayGame} dataview={statisticData} />
-            <DayCommission/>
-            <MarketValue
-                className="2xl:col-span-8 xl:col-span-7"
-                data={logGame}
-            />
-        </div>
-    )
+        )
+    }
 }
 
 export default Daily_overview
