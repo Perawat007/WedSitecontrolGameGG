@@ -203,5 +203,13 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/editdataagent/memberSub/Customers/components/CustomerAddDialog')),
         authority: [],
     },
+
+    //ดู Log PlayGame MemberSubAgent ของ Agent
+    {
+        key: 'groupMenu.editAgent.item3',
+        path: '/LogPlayGameMemberSub/:nameSubAgent/:subagentId/:idMember',
+        component: React.lazy(() => import('views/LogMember/Market/LogData')),
+        authority: [],
+    },
 ]
 

@@ -55,8 +55,11 @@ const ActionColumn = ({ row }) => {
     const [rowLogIdLog, setSeeLogId] = useState();
 
     const onViewOpenLog = (rowId) => {
-        setSeeLogId(rowId.id)
-        setViewLogOpen(true)
+        const pathA = window.location.pathname;
+        const pathSegments = pathA.split('/');
+        navigate(`/LogPlayGameMemberSub/${pathSegments[2]}/${pathSegments[3]}/${rowId.id}`)
+        /*setSeeLogId(rowId.id)
+        setViewLogOpen(true)*/
     }
 
     const onDialogLogClose = () => {
