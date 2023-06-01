@@ -65,7 +65,7 @@ const Daily_overview = () => {
                 <div className="grid grid-cols-1 xl:grid-cols-11 gap-4">
                     <FastTrade className="2xl:col-span-3 xl:col-span-4" />
                 </div>
-                <Holding data={logDayGame[0]} dataview={statisticData} />
+                <Holding data={logDayGame} dataview={statisticData} />
                 <DayCommission />
                 <MarketValue
                     className="2xl:col-span-8 xl:col-span-7"

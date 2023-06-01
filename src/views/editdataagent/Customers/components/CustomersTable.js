@@ -1,30 +1,24 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react'
-import { Avatar, Badge, Button, Dialog } from 'components/ui'
+import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import { Avatar, Button, Dialog, Input } from 'components/ui'
 import { DataTable } from 'components/shared'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getCustomers, setTableData } from '../store/dataSliceAdmin'
-import {
-    setSelectedCustomer,
-    setDrawerOpen,
-} from '../store/stateSlice'
 import useThemeClass from 'utils/hooks/useThemeClass'
-import CustomerEditDialog from './CustomerEditDialog'
-import CustomerAddDialog from './CustomerAddDialog'
 import LogAgMember from 'views/LogAgMember/Market/LogAgMember'
 import LogEditData from 'views/LogEditUser/Market/LogEditData'
 import cloneDeep from 'lodash/cloneDeep'
+import { FiPercent } from "react-icons/fi";
 import {
     HiPhone,
     HiCheck,
     HiMinusCircle,
     HiCurrencyDollar,
-    HiPencilAlt,
     HiOutlineDocumentText,
     HiOutlineUserGroup,
     HiPencil,
 } from 'react-icons/hi'
-import { TiFolderOpen } from "react-icons/ti";
+
 const statusColor = {
     active: 'bg-emerald-500',
     blocked: 'bg-red-500',
@@ -34,8 +28,13 @@ const ActionColumn = ({ row }) => {
     const { textTheme } = useThemeClass()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const onEdit = () => {
         navigate(`/editSutAgent/${row.id}`)
+    }
+
+    const onEditPercent = () => {
+        navigate(`/editPercentSutAgent/${row.id}`)
     }
 
     const onmemberSubAgent = () => {
@@ -58,12 +57,6 @@ const ActionColumn = ({ row }) => {
     }
 
     const [viewLogOpen, setViewLogOpen] = useState(false)
-    const [rowLogIdLog, setSeeLogId] = useState();
-
-    const onViewOpenLog = (rowId) => {
-        setSeeLogId(rowId.id)
-        setViewLogOpen(true)
-    }
 
     const onDialogLogClose = () => {
         setViewLogOpen(false)
@@ -74,6 +67,7 @@ const ActionColumn = ({ row }) => {
             <div>
                 <Button variant="solid" color="green-600" icon={<HiOutlineUserGroup />} onClick={() => onmemberSubAgent()} />
                 <Button variant="solid" color="blue-600" icon={<HiPencil />} onClick={() => onEdit()} />
+                <Button variant="solid" color="red-600" icon={<FiPercent />} onClick={() => onEditPercent()} />
                 <Button variant="solid" color="yellow-600" icon={<HiOutlineDocumentText />} onClick={() => onViewOpen(row)} />
             </div>
 
@@ -87,23 +81,6 @@ const ActionColumn = ({ row }) => {
                     <LogEditData idLog={rowIdLog} typeLog={'agent'} />
                 </div>
             </Dialog>
-
-            <Dialog
-                isOpen={viewLogOpen}
-                onClose={onDialogLogClose}
-                onRequestClose={onDialogLogClose}
-                bodyClass="p-0"
-            >
-                <div className="w-full">
-                    <div className="flex flex-col h-full justify-between">
-                        <div className="overflow-y-auto">
-                            <h1>Member</h1>
-                            <LogAgMember idLog={rowLogIdLog} />
-                        </div>
-                    </div>
-                </div>
-            </Dialog>
-
         </div>
     )
 }
@@ -267,9 +244,9 @@ const Customers = () => {
     }, [pageIndex, pageSize, sort, query, filterData, idUser, dispatch])
 
 
-    /*useEffect(() => {
+    useEffect(() => {
         fetchData()
-    }, [fetchData, pageIndex, pageSize, sort, filterData, idUser])*/
+    }, [fetchData, pageIndex, pageSize, sort, filterData, idUser])
 
     const tableData = useMemo(
         () => ({ pageIndex, pageSize, sort, query, total, idUser }),

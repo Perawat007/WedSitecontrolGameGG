@@ -1,7 +1,7 @@
 import BaseService from './BaseService'
 
-const baseURL = 'https://relaxtimecafe.fun/'
-//const baseURL = 'http://localhost:5000/'
+//const baseURL = 'https://relaxtimecafe.fun/'
+const baseURL = 'http://localhost:5000/'
 const ApiService = {
   //Login Admin
   loginAdmin(param) {
@@ -67,6 +67,7 @@ const ApiService = {
               if (response.status === 401) {
                 localStorage.removeItem('admin');
                 localStorage.removeItem('token');
+                window.location.reload();
               }
               else {
                 return response.json();
@@ -101,7 +102,6 @@ const ApiService = {
   //GetfetchDataSubMemberAg//Search ด้วย ส่ง name มา
   fetchDataSubMemberAg(param) {
     return new Promise((resolve, reject) => {
-      console.log(param);
       fetch(baseURL + 'post/MemberSubAgent/' + param.data.idUser, {
         method: 'POST',
         headers: {
@@ -134,7 +134,7 @@ const ApiService = {
   fetchDataAg(param) {
     return new Promise((resolve, reject) => {
       //const token = localStorage.getItem("token");
-      fetch(baseURL + 'post/listSubAgent/'+ param.data.idUser, {
+      fetch(baseURL + 'post/listSubAgent/' + param.data.idUser, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,9 +148,9 @@ const ApiService = {
         .then(response => {
           if (response) {
             if (response.status === 401) {
-              /*console.log(response.status);
               localStorage.removeItem('admin');
-              localStorage.removeItem('token');*/
+              localStorage.removeItem('token');
+              window.location.reload();
             }
             else {
               return response.json();
@@ -191,6 +191,7 @@ const ApiService = {
             if (response.status === 401) {
               localStorage.removeItem('admin');
               localStorage.removeItem('token');
+              window.location.reload();
             }
             else {
               return response.json();
@@ -228,7 +229,6 @@ const ApiService = {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           window.location.reload();
         })
         .catch(error => {
@@ -255,7 +255,6 @@ const ApiService = {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           window.location.reload();
         })
         .catch(error => {
@@ -284,7 +283,6 @@ const ApiService = {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           window.location.reload();
         })
         .catch(error => {
@@ -296,7 +294,7 @@ const ApiService = {
   //AddAgent
   addAgent(param) {
     return new Promise((resolve, reject) => {
-      console.log(param);
+      console.log(param.data);
       fetch(baseURL + 'post/singUpSubAgent', {
         method: 'POST',
         headers: {
@@ -311,7 +309,9 @@ const ApiService = {
           credit: param.data.credit,
           currency: param.data.currency,
           positiontype: param.data.positiontype,
-          level: param.data.level
+          level: param.data.level,
+          dataPercent: param.data.dataPercent,
+          dataActive: param.data.dataActive
         })
       })
         .then(response => {
@@ -464,6 +464,38 @@ const ApiService = {
     })
   },
 
+  //GetDataGame
+  getDataGame() {
+    return new Promise((resolve, reject) => {
+      const tokenA = localStorage.getItem("token");
+      fetch(baseURL + 'post/game', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tokenA}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => console.error(error))
+    })
+  },
+
+  //GetPercentDataGame
+  getPercentDataGame(param) {
+    return new Promise((resolve, reject) => {
+      fetch(baseURL + 'post/GetPercentSubAgent/' + param.data.id)
+        .then(response => response.json())
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => console.error(error))
+    })
+  },
+
+  //
   getValusDataPost(param) {
     return new Promise((resolve, reject) => {
       fetch(baseURL + 'post/postGetallData', {

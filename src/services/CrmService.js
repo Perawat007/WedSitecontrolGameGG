@@ -29,7 +29,7 @@ export async function apiGetSubAgent(data) {
     })
 }
 
-//get SubAgent
+//get MemberSubAgent
 export async function apiGetMemberSubAgent(data) {
     return ApiService.fetchDataSubMemberAg({
         data
@@ -54,6 +54,18 @@ export async function apiGetCrmMember(data) {
 //get Log_Member
 export async function apiGetLogMember(data) {
     return ApiService.fetchLogMember({
+        data
+    })
+}
+
+//get apiGetGame
+export async function apiGetGame() {
+    return ApiService.getDataGame()
+}
+
+//get percentageGameSubAgent
+export async function apiPercentageGameSubAgent(data) {
+    return ApiService.getPercentDataGame({
         data
     })
 }
@@ -122,9 +134,16 @@ export async function editPasswordSubAgent(data) {
         data
     })
 }
-//PutPasswordAgent
+//PutEditSubAgent
 export async function editSubAgent(data) {
     return ApiPutuser.putSubAgent({
+        data
+    })
+}
+
+//PutPercentSubAgent
+export async function editPercentSubAgent(data) {
+    return ApiPutuser.putPercentSubAgent({
         data
     })
 }

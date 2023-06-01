@@ -1,9 +1,8 @@
 import React, { forwardRef, useState } from 'react'
-import { FormContainer, Button, hooks, Input, FormItem, Select } from 'components/ui'
+import { FormContainer, Button, hooks, Input, FormItem, Select, Table} from 'components/ui'
 import FormRow from './FormRow'
 import FormDesription from './FormDesription'
 import { Form, Formik, Field } from 'formik'
-import cloneDeep from 'lodash/cloneDeep'
 import {
     HiOutlineCash,
     HiOutlineCurrencyDollar,
@@ -57,6 +56,21 @@ const validationSchema = Yup.object().shape({
         .required('Password Required')
         .matches(/^[0-9_-]*$/, 'Only Letters & Numbers Allowed'),
 })
+
+const InputColumn = ({ row }) => {
+    const [value, setValue] = useState('')
+    const handleChange = (e) => setValue(e.target.value)
+
+    return (
+        <div>
+            <Input
+                value={value}
+                onChange={handleChange}
+                placeholder="Sample placeholder"
+            />
+        </div>
+    )
+}
 
 const ProductForm = forwardRef((props, ref) => {
     const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
@@ -303,7 +317,7 @@ const ProductForm = forwardRef((props, ref) => {
                                         </div>
                                     </div>
                                 </AdaptableCard>
-
+                                
                                 <StickyFooter
                                     className="-mx-8 px-8 flex items-center justify-between py-4"
                                     stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"

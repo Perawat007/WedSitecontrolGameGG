@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { Input, FormItem, Avatar, FormContainer, Select } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import dayjs from 'dayjs'
@@ -6,8 +6,9 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import FormDesription from './FormDesription'
 import { AdaptableCard } from 'components/shared'
 import FormRow from '../Settings/components/FormRow'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import { AiOutlineSave } from 'react-icons/ai'
+import FormsAddPercent from './FormPercent'
 import {
     HiOutlineCash,
     HiOutlineCurrencyDollar,
@@ -26,7 +27,8 @@ const { Control } = components
 
 const CustomerFormAddAg = forwardRef((props, ref) => {
     const { onFormSubmit } = props
-
+    let dataPercent = [];
+    let dataActive = []; 
     const CustomSelectOption = ({ innerProps, label, data, isSelected }) => {
         return (
             <div
@@ -49,7 +51,7 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
         return (
             <Control {...props}>
                 {selected && (
-                     <HiOutlineUserGroup className="text-xl" />
+                    <HiOutlineUserGroup className="text-xl" />
                 )}
                 {children}
             </Control>
@@ -96,169 +98,138 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
         (state) => state.auth.user
     )
     const idUser = idAdmin.id
-    console.log(idUser);
+
+    const createPercent = (dataPercentarray, dataActivearray)=>{
+        dataPercent = dataPercentarray 
+        dataActive = dataActivearray
+    }
     return (
-        <Formik
-            innerRef={ref}
-            initialValues={{
-                id_Agent: idUser,
-                username: "",
-                name: "",
-                contact_number: "",
-                password: '',
-                positiontype: "",
-                credit: "",
-                level: '',
-                currency: 'บาท'
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-                onFormSubmit?.(values)
-                setSubmitting(false)
-            }}
-        >
-            {({ values, touched, errors }) => {
-                const validatorProps = { touched, errors }
-                return (
-                    <Form>
-                        <FormContainer>
-                            <FormDesription
-                                title="Add Agent "
-                                desc="กรุณากรอกข้อมูลของ Agent ให้ครบทุกช่อง"
-                            />
-                            <FormRow
-                                name="id_Agent"
-                                label="ID"
-                                {...validatorProps}
-                            >
-                                <Field
+        <div>
+            <Formik
+                innerRef={ref}
+                initialValues={{
+                    id_Agent: idUser,
+                    username: "",
+                    name: "",
+                    contact_number: "",
+                    password: '',
+                    positiontype: "",
+                    credit: "",
+                    level: '',
+                    currency: 'บาท'
+                }}
+                validationSchema={validationSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    onFormSubmit?.(values, dataPercent, dataActive)
+                    setSubmitting(false)
+                }}
+            >
+                {({ values, touched, errors }) => {
+                    const validatorProps = { touched, errors }
+                    return (
+                        <Form>
+                            <FormContainer>
+                                <FormDesription
+                                    title="Add Agent "
+                                    desc="กรุณากรอกข้อมูลของ Agent ให้ครบทุกช่อง"
+                                />
+                                <FormRow
                                     name="id_Agent"
-                                    component={Input}
-                                    prefix={<HiUserCircle className="text-xl" />}
-                                    disabled
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="username"
-                                label="Username"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="username"
-                                    placeholder="username"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineUser className="text-xl" />
-                                    }
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="password"
-                                label="password"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="password"
-                                    autoComplete="off"
-                                    name="password"
-                                    placeholder="Password"
-                                    component={Input}
-                                    prefix={<HiLockClosed className="text-xl" />}
-                                />
-                            </FormRow>
-                            <FormRow
-                                name="name"
-                                label="Name"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="name"
-                                    placeholder="name"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlineUser className="text-xl" />
-                                    }
-                                />
-                            </FormRow>
-
-                            <FormRow
-                                name="contact_number"
-                                label="Telephone Number"
-                                {...validatorProps}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="contact_number"
-                                    placeholder="Telephone Number"
-                                    component={Input}
-                                    prefix={
-                                        <HiOutlinePhone className="text-xl" />
-                                    }
-                                />
-                            </FormRow>
-
-                            <FormRow
-                                name="positiontype"
-                                label="ประเภทตำแหน่ง"
-                                {...validatorProps}
-                                border={false}
-                            >
-                                <Field name="positiontype">
-                                    {({ field, form }) => (
-                                        <Select
-                                            field={field}
-                                            form={form}
-                                            placeholder="Please Select"
-                                            options={bettypeOptions}
-                                            components={{
-                                                Option: CustomSelectOption,
-                                                Control: CustomControl,
-                                            }}
-                                            value={bettypeOptions.filter(
-                                                (option) =>
-                                                    option.value ===
-                                                    values?.positiontype
-                                            )}
-                                            onChange={(option) =>
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    option.value
-                                                )
-                                            }
-                                        />
-                                    )}
-                                </Field>
-                            </FormRow>
-
-                            <AdaptableCard className="mb-4" divider>
-                                <h5>กระเป๋าเงิน</h5>
-                                <p className="mb-6">Section to config product sales information</p>
-                               
-                                <FormItem
-                                    label="ระดับ"
-                                    invalid={errors.stock && touched.stock}
-                                    errorMessage={errors.stock}
+                                    label="ID"
+                                    {...validatorProps}
                                 >
-                                    <Field name="level">
+                                    <Field
+                                        name="id_Agent"
+                                        component={Input}
+                                        prefix={<HiUserCircle className="text-xl" />}
+                                        disabled
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="username"
+                                    label="Username"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="username"
+                                        placeholder="username"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlineUser className="text-xl" />
+                                        }
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="password"
+                                    label="password"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="password"
+                                        autoComplete="off"
+                                        name="password"
+                                        placeholder="Password"
+                                        component={Input}
+                                        prefix={<HiLockClosed className="text-xl" />}
+                                    />
+                                </FormRow>
+                                <FormRow
+                                    name="name"
+                                    label="Name"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="name"
+                                        placeholder="name"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlineUser className="text-xl" />
+                                        }
+                                    />
+                                </FormRow>
+
+                                <FormRow
+                                    name="contact_number"
+                                    label="Telephone Number"
+                                    {...validatorProps}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="contact_number"
+                                        placeholder="Telephone Number"
+                                        component={Input}
+                                        prefix={
+                                            <HiOutlinePhone className="text-xl" />
+                                        }
+                                    />
+                                </FormRow>
+
+                                <FormRow
+                                    name="positiontype"
+                                    label="ประเภทตำแหน่ง"
+                                    {...validatorProps}
+                                    border={false}
+                                >
+                                    <Field name="positiontype">
                                         {({ field, form }) => (
                                             <Select
                                                 field={field}
                                                 form={form}
                                                 placeholder="Please Select"
-                                                options={level}
+                                                options={bettypeOptions}
                                                 components={{
                                                     Option: CustomSelectOption,
                                                     Control: CustomControl,
                                                 }}
-                                                value={level.filter(
+                                                value={bettypeOptions.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values?.level
+                                                        values?.positiontype
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -269,49 +240,90 @@ const CustomerFormAddAg = forwardRef((props, ref) => {
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                </FormRow>
 
-                                    <div className="col-span-1">
-                                        <FormItem
-                                            label="ยอดเงิน"
-                                        >
-                                            <Field
-                                                type="Number"
-                                                autoComplete="off"
-                                                name="credit"
-                                                placeholder="ยอดเงิน"
-                                                component={Input}
-                                                prefix={
-                                                    <HiOutlineCurrencyDollar className="text-xl" />
-                                                }
-                                            />
-                                        </FormItem>
-                                    </div>
+                                <AdaptableCard className="mb-4" divider>
+                                    <h5>กระเป๋าเงิน</h5>
+                                    <p className="mb-6">Section to config product sales information</p>
 
-                                    <div className="col-span-1">
-                                        <FormItem
-                                            label="สกุลเงิน"
-                                        >
-                                            <Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="currency"
-                                                placeholder="บาท"
-                                                component={Input}
-                                                prefix={
-                                                    <HiOutlineCash className="text-xl" />
-                                                }
-                                            />
-                                        </FormItem>
+                                    <FormItem
+                                        label="ระดับ"
+                                        invalid={errors.stock && touched.stock}
+                                        errorMessage={errors.stock}
+                                    >
+                                        <Field name="level">
+                                            {({ field, form }) => (
+                                                <Select
+                                                    field={field}
+                                                    form={form}
+                                                    placeholder="Please Select"
+                                                    options={level}
+                                                    components={{
+                                                        Option: CustomSelectOption,
+                                                        Control: CustomControl,
+                                                    }}
+                                                    value={level.filter(
+                                                        (option) =>
+                                                            option.value ===
+                                                            values?.level
+                                                    )}
+                                                    onChange={(option) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            option.value
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                        <div className="col-span-1">
+                                            <FormItem
+                                                label="ยอดเงิน"
+                                            >
+                                                <Field
+                                                    type="Number"
+                                                    autoComplete="off"
+                                                    name="credit"
+                                                    placeholder="ยอดเงิน"
+                                                    component={Input}
+                                                    prefix={
+                                                        <HiOutlineCurrencyDollar className="text-xl" />
+                                                    }
+                                                />
+                                            </FormItem>
+                                        </div>
+
+                                        <div className="col-span-1">
+                                            <FormItem
+                                                label="สกุลเงิน"
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="currency"
+                                                    placeholder="บาท"
+                                                    component={Input}
+                                                    prefix={
+                                                        <HiOutlineCash className="text-xl" />
+                                                    }
+                                                />
+                                            </FormItem>
+                                        </div>
                                     </div>
-                                </div>
-                            </AdaptableCard>
-                        </FormContainer>
-                    </Form>
-                )
-            }}
-        </Formik>
+                                </AdaptableCard>
+                            </FormContainer>
+                        </Form>
+                    )
+                }}
+            </Formik>
+            <FormsAddPercent
+                data={props.data}
+                createPercent ={createPercent}
+            />
+        </div>
     )
 })
 

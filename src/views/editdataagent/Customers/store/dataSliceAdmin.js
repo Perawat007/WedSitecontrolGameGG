@@ -5,7 +5,8 @@ import {
     apPutAgent,
     apiGetAgent,
     apPutDeleteAgent,
-    editPasswordSubAgent
+    editPasswordSubAgent,
+    apiGetGame
 } from 'services/CrmService'
 import { useSelector } from 'react-redux'
 import AlertError from 'views/AlertError'
@@ -51,7 +52,6 @@ export const AddCustomer = createAsyncThunk(
     'crmCustomers/data/AddCustomer',
     async (data) => {
         const response = await apAddAgent(data)
-        console.log(response);
         if (response.message === "subAgent Creates False") {
             alert("UserName นี้มีอยู่แล้ว กรุณาเปลี่ยน Username");
         }
@@ -67,6 +67,14 @@ export const DeleteAgent = createAsyncThunk(
 
         const response = await apPutDeleteAgent(data, 'agent')
         return response.data
+    }
+)
+
+export const getGame = createAsyncThunk(
+    'crmCustomers/data/getGame',
+    async () => {
+        const response = await apiGetGame()
+        return response
     }
 )
 

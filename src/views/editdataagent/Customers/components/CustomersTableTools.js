@@ -34,7 +34,6 @@ const CustomersTableTools = () => {
         newTableData.pageIndex = 1
         newTableData.idUser = idUser
         if (typeof val === 'string' && val.length !== 0) {
-            console.log(newTableData);
             fetchData(newTableData)
         }
 

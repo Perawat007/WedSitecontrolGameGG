@@ -108,14 +108,6 @@ export const protectedRoutes = [
     },
 
     {
-        key: 'groupMenu.editAgent.item3',
-        path: '/editSutAgent/:subagentId',
-        component: React.lazy(() => import('views/editdataagent/EditSubAgent/ProductEdit')),
-        authority: [],
-    },
-
-
-    {
         key: 'groupMenu.editAgent.item2',
         path: '/agent/addAgent',
         component: React.lazy(() => import('views/editdataagent/Settings')),
@@ -185,6 +177,22 @@ export const protectedRoutes = [
         key: 'groupMenu.editAgent.item3',
         path: '/memberSub/:nameSubAgent/:subagentId',
         component: React.lazy(() => import('views/editdataagent/memberSub/Customers/memberSubAg')),
+        authority: [],
+    },
+
+    //editSubAgent pang
+    {
+        key: 'groupMenu.editAgent.item3',
+        path: '/editSutAgent/:subagentId',
+        component: React.lazy(() => import('views/editdataagent/EditSubAgent/ProductEdit')),
+        authority: [],
+    },
+
+    //editPercent SubAgent pang
+    {
+        key: 'groupMenu.editAgent.item4',
+        path: '/editPercentSutAgent/:subagentId',
+        component: React.lazy(() => import('views/editdataagent/FormsEditPercent/EditPercent')),
         authority: [],
     },
 
