@@ -52,24 +52,27 @@ const FormsEditPercent = ({ data = [], valus = '' }) => {
     const [sorting, setSorting] = React.useState([])
     const popupRef = useRef(null);
 
-    if (popupRef.current) {
-        popupRef.current.style.display = 'none';
-    }
-    if (dataPercentarray.length === 0) {
-        for (let i = 0; i < valus; i++) {
-            const dataPercentStart = {
-                namegame: data[i].gamename,
-                PercentValus: data[i].hold_percentage,
-            };
-
-            const dataActiveStart = {
-                namegame: data[i].gamename,
-                activeValue: data[i].status_game,
-            };
-            dataPercentarray.push(dataPercentStart);
-            dataActivearray.push(dataActiveStart)
+    useEffect(() => {
+        if (popupRef.current) {
+            popupRef.current.style.display = 'none';
         }
-    }
+
+        if (dataPercentarray.length === 0) {
+            for (let i = 0; i < valus; i++) {
+                const dataPercentStart = {
+                    namegame: data[i].gamename,
+                    PercentValus: data[i].hold_percentage,
+                };
+
+                const dataActiveStart = {
+                    namegame: data[i].gamename,
+                    activeValue: data[i].status_game,
+                };
+                dataPercentarray.push(dataPercentStart);
+                dataActivearray.push(dataActiveStart)
+            }
+        }
+    }, []);
 
     const InputColumnAgent = ({ row }) => {
         //string to int
@@ -103,25 +106,28 @@ const FormsEditPercent = ({ data = [], valus = '' }) => {
             setNewValues(90 - valusPercent + '%')
         }
         return (
-            <div>
-                <div>
-                    <Select
-                        defaultValue={valueStart[0].options[0]}
-                        onChange={handleChanges}
-                        placeholder="Type something..."
-                        options={level}
-                    />
-                </div>
-                <div className="flex items-center">
-                    <Input
-                        value={values}
-                        onChange={handleSelectChange}
-                        placeholder={'0%'}
-                        disabled
-                        readOnly
-                    />
-                </div>
+            <div className="container">
+            <div className="select-container">
+                <p>เปอร์เซ็นของเรา</p>
+                <Select
+                    defaultValue={valueStart[0].options[0]}
+                    onChange={handleChanges}
+                    placeholder="Type something..."
+                    options={level}
+                />
+            </div >
+            <div className="input-container">
+                <p>ส่วนแบ่ง</p>
+                <Input
+                    value={values}
+                    onChange={handleSelectChange}
+                    placeholder={'0%'}
+                    disabled
+                    readOnly
+                    className="input-container_input"
+                />
             </div>
+        </div>
         )
     }
 
@@ -252,22 +258,22 @@ const FormsEditPercent = ({ data = [], valus = '' }) => {
         getSortedRowModel: getSortedRowModel(),
     })
 
-    const path = location.pathname.substring(
-        location.pathname.lastIndexOf('/') + 1
-    )
-    const rquestParam = { id: path }
-    const dataPercent = ({
-        id: rquestParam.id,
-        data: dataPercentarray,
-        dataActive: dataActivearray,
-    })
-
     const togglePopup = async () => {
+
+        const path = location.pathname.substring(
+            location.pathname.lastIndexOf('/') + 1
+        )
+        const rquestParam = { id: path }
+        const dataPercent = ({
+            id: rquestParam.id,
+            data: dataPercentarray,
+            dataActive: dataActivearray,
+        })
         console.log(dataPercent);
-        const success = await updatePercent(dataPercent)
+        /*const success = await updatePercent(dataPercent)
         if (success.message) {
             navigate('/editDataAgent')
-        }
+        }*/
     }
     const backpang = () => {
         navigate('/editDataAgent')

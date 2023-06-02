@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { Dialog, Button, hooks, Input, Switcher, Select, Table, Avatar, Card } from 'components/ui'
-import { Form, Formik, Field } from 'formik'
+import './DropdownList.css';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AiOutlineSave } from 'react-icons/ai'
 import { StickyFooter } from 'components/shared'
@@ -83,25 +83,28 @@ const FormsAddPercent = ({data = [], createPercent }) => {
             createPercent(dataPercentarray, dataActivearray);
         }
         return (
-            <div>
-                <div>
-                    <Select
-                        defaultValue={valueStart[0].options[0]}
-                        onChange={handleChanges}
-                        placeholder="Type something..."
-                        options={level}
-                    />
-                </div>
-                <div className="flex items-center">
-                    <Input
-                        value={values}
-                        onChange={handleSelectChange}
-                        placeholder={'0%'}
-                        disabled
-                        readOnly
-                    />
-                </div>
+            <div className="container">
+            <div className="select-container">
+                <p>เปอร์เซ็นของเรา</p>
+                <Select
+                    defaultValue={valueStart[0].options[0]}
+                    onChange={handleChanges}
+                    placeholder="Type something..."
+                    options={level}
+                />
+            </div >
+            <div className="input-container">
+                <p>ส่วนแบ่ง</p>
+                <Input
+                    value={values}
+                    onChange={handleSelectChange}
+                    placeholder={'0%'}
+                    disabled
+                    readOnly
+                    className="input-container_input"
+                />
             </div>
+        </div>
         )
     }
 
